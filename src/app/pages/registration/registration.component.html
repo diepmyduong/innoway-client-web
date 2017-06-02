@@ -1,0 +1,136 @@
+ <section class="contact-page inner-page">
+    <div class="container">
+      <div class="row">
+          <!-- REGISTER -->
+          <div class="col-md-6">
+            <div class="widget">
+                <div class="widget-body">
+                <h2>Đăng ký</h2>
+                  <form [formGroup]="frmRegistration">
+                      <div class="row">
+                        <div class="alert alert-danger" *ngIf="regisSubmited && frmRegistration.invalid" >
+                            <div *ngIf="frmRegistration.get('phone').invalid">
+                                <p *ngFor="let err of frmRegistration.get('phone').errors | keys">
+                                    <strong>Điện thoại :</strong> {{regisValidMessages.phone[err]}}
+                                </p>
+                            </div>
+                            <div *ngIf="frmRegistration.get('fullName').invalid">
+                                <p><strong>Họ và Tên :</strong> {{regisValidMessages.required}}</p>
+                            </div>
+                            <div *ngIf="frmRegistration.get('email').invalid">
+                                <p *ngFor="let err of frmRegistration.get('email').errors | keys">
+                                    <strong>Email :</strong> {{regisValidMessages.email[err]}}
+                                </p>
+                            </div>
+                            <div *ngIf="frmRegistration.get('password').invalid">
+                                <p *ngFor="let err of frmRegistration.get('password').errors | keys">
+                                    <strong>Mật khẩu :</strong> {{regisValidMessages.password[err]}}
+                                </p>
+                            </div>
+                            <div *ngIf="frmRegistration.errors">
+                                <p *ngFor="let err of frmRegistration.errors | keys">
+                                    {{regisValidMessages[err]}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" *ngIf="regisSubmited && regisCbMessage" >
+                            <p>{{regisCbMessage}} </p>
+                        </div>
+                        <div class="form-group col-sm-6"
+                        [class.has-warning]="(regisSubmited || frmRegistration.get('phone').dirty) && frmRegistration.get('phone').invalid"
+                        [class.has-success]="frmRegistration.get('phone').dirty && frmRegistration.get('phone').valid">
+                            <label for="exampleInputEmail1">Số điện thoại</label>
+                            <input formControlName="phone" class="form-control" type="tel" placeholder="Nhập số điện thoại" id="example-tel-input-3">
+                        </div>
+                        <div class="form-group col-sm-6"
+                        [class.has-warning]="(regisSubmited || frmRegistration.get('fullName').dirty) && frmRegistration.get('fullName').invalid"
+                        [class.has-success]="frmRegistration.get('fullName').dirty && frmRegistration.get('fullName').valid">
+                            <label for="exampleInputEmail1">Họ và Tên</label>
+                            <input formControlName="fullName" class="form-control" type="text" placeholder="Họ và Tên" id="example-text-input"> 
+                        </div>
+                        <div class="form-group col-sm-12"
+                        [class.has-warning]="(regisSubmited || frmRegistration.get('email').dirty) && frmRegistration.get('email').invalid"
+                        [class.has-success]="frmRegistration.get('email').dirty && frmRegistration.get('email').valid">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập email">
+                        </div>
+                        
+                        <div class="form-group col-sm-6"
+                        [class.has-warning]="(regisSubmited || frmRegistration.get('password').dirty) && frmRegistration.get('password').invalid"
+                        [class.has-success]="frmRegistration.get('password').dirty && frmRegistration.get('password').valid">
+                            <label for="exampleInputPassword1">Mật khẩu</label>
+                            <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> 
+                        </div>
+                        <div class="form-group col-sm-6"
+                        [class.has-warning]="(regisSubmited || frmRegistration.get('confirm').dirty) && frmRegistration.get('confirm').invalid"
+                        [class.has-success]="frmRegistration.get('confirm').dirty && frmRegistration.get('confirm').valid">
+                            <label for="exampleInputPassword1">Xác nhận mật khẩu</label>
+                            <input formControlName="confirm" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password"> 
+                        </div>
+          
+                        </div>
+                      <div class="row">
+                         
+                        <div class="col-sm-4">
+                            <p> <button (click)="signup()" class="btn theme-btn">Đăng ký</button> </p>
+                        </div>
+                      </div>
+                  </form>
+                </div>
+                <!-- end: Widget -->
+            </div>
+            <!-- /REGISTER -->
+          </div>
+          <!-- WHY? -->
+        <div class="col-md-6">
+            <div class="widget">
+                <div class="widget-body">
+                <h2>Đăng nhập</h2>
+                  <form [formGroup]="frmLogin">
+                      <div class="row">
+                        <div class="alert alert-danger" *ngIf="loginSubmited && frmLogin.invalid" >
+                            <div *ngIf="frmLogin.get('phone').invalid">
+                                <p *ngFor="let err of frmLogin.get('phone').errors | keys">
+                                    <strong>Điện thoại :</strong> {{regisValidMessages.phone[err]}}
+                                </p>
+                            </div>
+                            <div *ngIf="frmLogin.get('password').invalid">
+                                <p *ngFor="let err of frmLogin.get('password').errors | keys">
+                                    <strong>Mật khẩu :</strong> {{regisValidMessages.password[err]}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" *ngIf="loginSubmited && loginCbMessage" >
+                            <p>{{loginCbMessage}} </p>
+                        </div>
+                        <div class="form-group col-sm-6"
+                        [class.has-warning]="(loginSubmited || frmLogin.get('phone').dirty) && frmLogin.get('phone').invalid"
+                        [class.has-success]="frmLogin.get('phone').dirty && frmLogin.get('phone').valid">
+                            <label for="exampleInputEmail1">Số điện thoại</label>
+                            <input formControlName="phone" class="form-control" type="tel" placeholder="Nhập số điện thoại" id="example-tel-input-3">
+                        </div>
+                        <div class="form-group col-sm-12"
+                        [class.has-warning]="(loginSubmited || frmLogin.get('password').dirty) && frmLogin.get('password').invalid"
+                        [class.has-success]="frmLogin.get('password').dirty && frmLogin.get('password').valid">
+                            <label for="exampleInputPassword1">Mật khẩu</label>
+                            <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> 
+                        </div>
+          
+                        </div>
+                      <div class="row">
+                        <div class="col-sm-4">
+                            <p> <button (click)="login()" class="btn theme-btn">Đăng nhập</button>  </p>
+                        </div>
+                      </div>
+                  </form>
+                </div>
+                <!-- end: Widget -->
+            </div>
+            <!-- /REGISTER -->
+            <button (click)="loginWithFacebook()" class="btn btn-lg btn-primary"><i class="fa fa-facebook pull-left"></i> Facebook</button>
+            <button (click)="loginWithGoogle()" class="btn theme-btn btn-lg"><i class="fa fa-google pull-left"></i> Google</button>
+          </div>
+          <!-- /WHY? -->
+      </div>
+    </div>
+</section>

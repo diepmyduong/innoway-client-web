@@ -1,0 +1,41 @@
+<div class="modal-content">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+      (click)="closeModal()"> 
+      <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-body cart-addon">
+    <div class="cart-totals margin-b-20" *ngIf="bill">
+        <div class="cart-totals-title"><h4>Chi tiết đơn hàng {{bill.Code}}</h4> </div>
+        <div class="info-block">
+            <p class="info-line">Trạng thái: <strong class="pull-right">{{bill.Status}}</strong></p>
+            <p class="info-line">Tổng tiền: <span class="pull-right">{{bill.BasePrice | currency:'VND':true}}</span></p>
+            <p class="info-line">Tổng tiền thanh toán: <span class="pull-right">{{bill.PurchasePrice | currency:'VND':true}}</span></p>
+            <p class="info-line">Khuyến mãi: <span class="pull-right">{{bill.Promotion}}</span></p>
+        </div>
+        <div class="cart-totals-title"><h4>Người nhận</h4> </div>
+        <div class="info-block">
+            <p class="info-line"><i class="fa fa-user pull-left" style="font-size: larger;width: 20px;"></i>  {{bill.Fullname}}</p>
+            <p class="info-line"><i class="fa fa-mobile pull-left" style="font-size: larger;width: 20px;"></i>  {{bill.Phone}}</p>
+            <p class="info-line"><i class="fa fa-map-marker pull-left" style="font-size: larger;width: 20px;"></i>  {{bill.Address}}</p>
+        </div>
+        <div class="cart-totals-title" *ngIf="isDelivered"><h4>Người giao</h4> </div>
+        <div class="info-block" *ngIf="isDelivered">
+            <p class="info-line">
+                <img [attr.src]="bill.Avatar" alt="" style="width:40px;height:40px;margin-right:10px">
+                {{bill.EmployeeName}}
+            </p>
+        </div>
+        <div class="cart-totals-title"><h4>Sản phẩm</h4> </div>
+        <div class="cart-totals-fields">
+            <table class="table">
+                <tbody>
+                    <tr *ngFor="let product of bill.BillDetails">
+                        <td>{{product.Quantity}} x {{product.ProductName}}</td>
+                        <td>{{product.TotalPrice | currency:'VND':true}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>

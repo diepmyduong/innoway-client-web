@@ -1,0 +1,57 @@
+<section class="contact-page inner-page">
+    <div class="container">
+        <div class="row">
+            <!-- REGISTER -->
+
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="widget-body">
+                    <h2>Khuyến Mãi</h2>
+                        <!-- Contact form -->
+                        <div *ngFor="let promotion of promotions | async"
+                        class="bg-gray restaurant-entry">
+                          <div class="row">
+                              <div class="col-sm-12 col-md-12 col-lg-8 text-xs-center text-sm-left">
+                                  <div class="entry-logo">
+                                      <div class="figure-wrap bg-image" appBgImage [imageSrc]="promotion.Photo" *ngIf="promotion" style="height:110px;width:110px;"></div>
+                                  </div>
+                                  <!-- end:Logo -->
+                                  <div class="entry-dscr">
+                                      <h5><a href="#">{{promotion.Name}}</a></h5> 
+                                      <span>{{promotion.Description}}</span>
+                                      <ul>
+                                          <li class="">
+                                            <i class="fa fa-clock-o"></i>
+                                             Từ ngày {{promotion.StartDate | date:'dd-MM-yyyy hh:mm:ss'}} 
+                                             Đến ngày {{promotion.EndDate | date:'dd-MM-yyyy hh:mm:ss'}}
+                                          </li>
+                                          
+                                          <!--<li class="list-inline-item"><i class="fa fa-motorcycle"></i> 30 min</li>-->
+                                      </ul>
+                                  </div>
+                                  <!-- end:Entry description -->
+                              </div>
+                              <div class="col-sm-12 col-md-12 col-lg-4 text-xs-center">
+                                  <div class="right-content bg-white">
+                                      <div class="right-review">
+                                          Trị giá
+                                          <h3> {{promotion.PromotionValue | currency:'VND':true}}</h3> 
+                                          <a [attr.data-clipboard-text]="promotion.Code"
+                                          href="javscript:;" class="btn theme-btn-dash" class="copy-to-clipboard">{{promotion.Code}}</a> </div>
+                                  </div>
+                                  <!-- end:right info -->
+                              </div>
+                          </div>
+                          <!--end:row -->
+                        </div>
+                        <!-- End Contact form -->
+                    </div>
+                </div>
+                <!-- end: Widget -->
+            </div>
+            <!-- /WHY? -->
+        </div>
+    </div>
+</section>
+    
+  

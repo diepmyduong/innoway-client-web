@@ -1,0 +1,187 @@
+<div class="top-links">
+    <div class="container">
+        <ul class="row links">
+            <li class="col-xs-12 col-sm-4 link-item" [class.active]="step.location"><span>1</span><a (click)="chooseLocation()">Chọn địa chỉ giao</a></li>
+            <li class="col-xs-12 col-sm-4 link-item" [class.active]="step.order"><span>2</span><a  (click)="billInfo()">Thông tin đơn hàng</a></li>
+            <li class="col-xs-12 col-sm-4 link-item" [class.active]="step.complete"><span>3</span><a> Hoàn thành</a></li>
+        </ul>
+    </div>
+</div>
+
+<div *ngIf="currentStep == 'location'"
+    class="container m-t-30">
+    <div class="widget clearfix">
+        <div class="widget-heading">
+            <h3 class="widget-title text-dark">
+                Địa chỉ giao hàng
+            </h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="widget-body">
+            <div class="row">
+                <div class="col-sm-6" style="height:300px">
+                    <app-bl-map [position]="addressPosition | async" 
+                        (positionUpdate)="onPositionChange($event)" ></app-bl-map>
+                    <!--<app-bl-map [position]="addressPosition2" ></app-bl-map>-->
+                </div>
+                <div class="col-sm-6 margin-b-30">
+                    <form [formGroup]="frmAddress">
+                    <div class="row">
+                        <div class="alert alert-danger" *ngIf="locationSubmited && frmAddress.invalid" >
+                            <div *ngIf="frmAddress.get('address').invalid">
+                                <p><strong>Địa chỉ :</strong> {{locationValidMessages.address}}</p>
+                            </div>
+                            <div *ngIf="frmAddress.get('area').invalid">
+                                <p><strong>Khu vực :</strong> {{locationValidMessages.area}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Địa chỉ giao*</label>
+                                <input formControlName="address"
+                                [class.has-warning]="(locationSubmited || frmAddress.get('address').dirty) && frmAddress.get('address').invalid"
+                                [class.has-success]="frmAddress.get('address').dirty && frmAddress.get('address').valid"
+                                    #placeSearchbar id="place-searchbar"
+                                    type="text" class="form-control"> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Khu vực</label>
+                                <input formControlName="area"
+                                    [class.has-warning]="(locationSubmited || frmAddress.get('area').dirty) && frmAddress.get('area').invalid"
+                                    [class.has-success]="frmAddress.get('area').dirty && frmAddress.get('area').valid"
+                                    type="text" class="form-control" placeholder="Quận" readonly>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="payment-option">
+                        <p class="text-xs-center"> <button class="btn btn-outline-success btn-block" (click)="billInfo()">Tiếp theo</button> </p>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="currentStep == 'order'"
+    class="container m-t-30">
+    <div class="widget clearfix">
+
+        <div class="widget-heading">
+            <h3 class="widget-title text-dark">
+                Thông tin đơn hàng
+            </h3>
+            <div class="clearfix"></div>
+        </div>
+        <div class="widget-body">
+            
+            <div class="row">
+                <div class="col-sm-6 margin-b-30">
+                    <form [formGroup]="frmRegistration">
+                        <div class="row">
+                            <div class="alert alert-danger" *ngIf="regisSubmited && frmRegistration.invalid" >
+                                <div *ngIf="frmRegistration.get('phone').invalid">
+                                    <p *ngFor="let err of frmRegistration.get('phone').errors | keys">
+                                        <strong>Điện thoại :</strong> {{regisValidMessages.phone}}
+                                    </p>
+                                </div>
+                                <div *ngIf="frmRegistration.get('fullName').invalid">
+                                    <p><strong>Họ và Tên :</strong> {{regisValidMessages.required}}</p>
+                                </div>
+                                <div *ngIf="frmRegistration.get('email').invalid">
+                                    <p *ngFor="let err of frmRegistration.get('email').errors | keys">
+                                        <strong>Email :</strong> {{regisValidMessages.email}}
+                                    </p>
+                                </div>
+                                <div *ngIf="frmRegistration.get('address').invalid">
+                                    <p><strong>Địa chỉ :</strong> {{regisValidMessages.required}}</p>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="regisSubmited && regisCbMessage" >
+                                <p>{{regisCbMessage}} </p>
+                            </div>
+                            <div class="form-group col-sm-6"
+                            [class.has-warning]="(regisSubmited || frmRegistration.get('phone').dirty) && frmRegistration.get('phone').invalid"
+                            [class.has-success]="frmRegistration.get('phone').dirty && frmRegistration.get('phone').valid">
+                                <label for="exampleInputEmail1">Số điện thoại</label>
+                                <input formControlName="phone" class="form-control" type="tel" placeholder="Nhập số điện thoại" id="example-tel-input-3">
+                            </div>
+                            <div class="form-group col-sm-6"
+                            [class.has-warning]="(regisSubmited || frmRegistration.get('fullName').dirty) && frmRegistration.get('fullName').invalid"
+                            [class.has-success]="frmRegistration.get('fullName').dirty && frmRegistration.get('fullName').valid">
+                                <label for="exampleInputEmail1">Họ và Tên</label>
+                                <input formControlName="fullName" class="form-control" type="text" placeholder="Họ và Tên" id="example-text-input"> 
+                            </div>
+                            <div class="form-group col-sm-12"
+                            [class.has-warning]="(regisSubmited || frmRegistration.get('email').dirty) && frmRegistration.get('email').invalid"
+                            [class.has-success]="frmRegistration.get('email').dirty && frmRegistration.get('email').valid">
+                                <label for="exampleInputEmail1">Email</label>
+                                <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập email">
+                            </div>
+                            <div class="form-group col-sm-12"
+                            [class.has-warning]="(regisSubmited || frmRegistration.get('promotion').dirty) && frmRegistration.get('promotion').invalid"
+                            [class.has-success]="frmRegistration.get('promotion').dirty && frmRegistration.get('promotion').valid">
+                                <label for="exampleInputEmail1">Mã khuyến mãi</label>
+                                <input formControlName="promotion" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập mã khuyến mãi">
+                            </div>
+                            <div class="form-group col-sm-12"
+                            [class.has-warning]="(regisSubmited || frmRegistration.get('address').dirty) && frmRegistration.get('address').invalid"
+                            [class.has-success]="frmRegistration.get('address').dirty && frmRegistration.get('address').valid">
+                                <label for="exampleInputEmail1">Địa chỉ giao</label>
+                                <input formControlName="address" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập địa chỉ" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <div class="cart-totals margin-b-20">
+                        <div class="cart-totals-title">
+                            <h4>Chi tiết đơn hàng</h4> </div>
+                        <div class="cart-totals-fields">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let card of cards | async">
+                                        <td>{{card.Quantity}} x {{card.Name}}</td>
+                                        <td>{{card.Quantity*card.Price | currency:'VND':true}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-color"><strong>Tổng tiền</strong></td>
+                                        <td class="text-color"><strong>{{cardService.total | currency:'VND':true}}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="payment-option">
+                        <ul class=" list-unstyled">
+                            <li>
+                                <label class="custom-control custom-radio  m-b-10">
+                                <input name="radio-stacked" type="radio" class="custom-control-input" checked> 
+                                <span class="custom-control-indicator"></span> <span class="custom-control-description">Trả khi nhận hàng </span> </label>
+                            </li>
+                        </ul>
+                        <p class="text-xs-center"> <button (click)="chooseLocation()" class="btn btn-outline-warning btn-block">Quay lại</button> </p>
+                        <p class="text-xs-center"> <button (click)="complete()" class="btn btn-outline-success btn-block">Thanh toán</button> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="currentStep == 'complete'"
+    class="container m-t-30">
+    <div class="row" style="text-align:center">
+        <p><img src="assets/images/success.png" ></p>
+        <h1>Đặt hàng thành công!</h1>
+        <p><a>Theo dõi đơn hàng {{ orderId }}</a></p>
+    </div>
+</div>
+<!--<div class="container m-t-30">
+    
+</div>-->

@@ -1,0 +1,112 @@
+<section>
+	<div class="container m-t-30">
+      <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+              <div class="sidebar clearfix m-b-20">
+                  <div class="main-block">
+                      <div class="sidebar-title white-txt">
+                          <h6>Loại sản phẩm</h6> <i class="fa fa-cutlery pull-right"></i> </div>
+                      <ul>
+                          <li *ngFor="let category of categories | async" >
+                              <a (click)="anchorTo(category)" class="scroll active">{{category.Name}}</a>
+                          </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                  </div>
+              
+              </div>
+              <!-- end:Left Sidebar -->
+          </div>
+          <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6" #productsContainer>
+              <div *ngFor="let category of categories | async"
+                class="menu-widget m-b-30" >
+                <div class="widget-heading" [attr.id]="'category_'+category.Id">
+                      <h3 class="widget-title text-dark">
+                        {{category.Name}} <a class="btn btn-link pull-right" data-toggle="collapse" href="#popular" aria-expanded="true">
+                        <i class="fa fa-angle-right pull-right"></i>
+                        <i class="fa fa-angle-down pull-right"></i>
+                        </a>
+                      </h3>
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="collapse in" id="1">
+                      <div *ngFor="let product of products | async | searchFilter:'CategoryId':category.Id"
+                        class="food-item white">
+                          <div class="row">
+                              <div class="col-xs-12 col-sm-12 col-lg-8">
+                                  <div class="rest-logo pull-left">
+                                      <a class="restaurant-logo pull-left" href="#"><img [attr.src]="product.Thumbnail" alt="Food logo"></a>
+                                  </div>
+                                  <!-- end:Logo -->
+                                  <div class="rest-descr">
+                                      <h6><a href="#">{{product.Name}}</a></h6>
+                                  </div>
+                                  <!-- end:Description -->
+                              </div>
+                              <!-- end:col -->
+                              <div class="col-xs-12 col-sm-12 col-lg-4 pull-right item-cart-info"> 
+                                  <span class="price pull-left">{{product.Price | currency:'VND':true}}</span> 
+                                  <a href="#" class="btn btn-small btn btn-secondary pull-right" 
+                                    data-toggle="modal" data-target="#order-modal"
+                                    (click)="addToCard(product)">&#43;</a>
+
+                              </div>
+                          </div>
+                          <!-- end:row -->
+                      </div>
+                      <!-- end:Food item -->
+                  </div>
+              </div>
+              <!-- end:Widget menu -->
+          </div>
+          <div class="col-xs-12 col-md-12 col-lg-3">
+              <div class="sidebar-wrap">
+                  <div class="widget widget-cart">
+                      <div class="widget-heading">
+                          <h3 class="widget-title text-dark">
+                            Giỏ hàng
+                          </h3>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div *ngFor="let card of cards | async"
+                        class="order-row bg-white">
+                          <div class="widget-body">
+                              <div class="title-row">{{card.Name}}<span class="pull-right">{{card.Quantity*card.Price | currency:'VND':true}}</span></div>
+                              <div class="title-row" style="font-size: 12px;">Size M, pudding</div>
+                              <div class="row" style="margin:0;">
+                                <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">&#43;</a>
+                                <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">{{card.Quantity}}</a>
+                                <a (click)="decreaseCard(card)"
+                                 class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">&#45;</a>
+                              </div>
+                          </div>
+                      </div>
+                      <!--<div class="order-row bg-white">
+                          <div class="widget-body">
+                              <div class="title-row">Espresso<span class="pull-right">50.000 đ</span></div>
+                              <div class="title-row" style="font-size: 12px;">Size M, pudding</div>
+                              <div class="row" style="margin:0;">
+                                <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">&#43;</a>
+                                <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">3</a>
+                                <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">&#45;</a>
+                              </div>
+                          </div>
+                      </div>-->
+                      <!-- end:Order row -->
+                      
+                      <div class="widget-body">
+                          <div class="price-wrap text-xs-center">
+                              <p>Tổng cộng</p>
+                              <h3 class="value"><strong>{{cardService.total | currency:'VND':true}}</strong></h3>
+                              <p>Free Shipping</p>
+                              <button (click)="checkout()" type="button" class="btn theme-btn btn-lg">Thanh toán</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- end:Right Sidebar -->
+      </div>
+      <!-- end:row -->
+  </div>
+</section>

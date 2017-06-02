@@ -1,3 +1,10 @@
-<h1>
-  {{title}}
-</h1>
+<div class="site-wrapper">
+  <app-bl-header></app-bl-header>
+  <div class="page-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+  
+  <app-bl-download></app-bl-download>
+  <app-bl-footer></app-bl-footer>
+</div>
+<span defaultOverlayTarget></span>

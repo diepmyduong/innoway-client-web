@@ -1,0 +1,19 @@
+<sebm-google-map #myMap *ngIf="currentPosition" id="my-map"
+  [latitude]="currentPosition.latitude" 
+  [longitude]="currentPosition.longitude"
+  [zoom]="mapZoom"
+  (mapClick)="onMapClick($event)">
+  <sebm-google-map-marker
+    *ngFor="let address of addressMarkers"
+    [latitude]="address.lat" 
+    [longitude]="address.lng" 
+    [iconUrl]="'/assets/images/placeholder.png'"
+    >
+    <!--<sebm-google-map-info-window >
+      <button ion-button outline
+      (click)="goToAddEnterprisePage(address)">
+      Thêm doanh nghiệp
+      </button>
+    </sebm-google-map-info-window>-->
+  </sebm-google-map-marker>
+</sebm-google-map>

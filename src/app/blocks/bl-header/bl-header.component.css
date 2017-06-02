@@ -1,0 +1,15 @@
+.collapse-show {
+    display: none;
+}
+.collapse-hide {
+    display: block;
+}
+
+@media (max-width: 767px) {
+    .collapse-show {
+        display: block;
+    }
+    .collapse-hide {
+    display: none;
+}
+}

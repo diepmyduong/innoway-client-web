@@ -1,0 +1,23 @@
+ <section class="popular">
+    <div class="container">
+        <div class="title text-xs-center m-b-30">
+            <h2>Sản phẩm nổi bật</h2>
+            <p class="lead">Những sản phẩm nước uống được ưa chuộng nhất của các bạn trẻ</p>
+        </div>
+        <div class="row">
+            <!-- Each popular food item starts -->
+            <div class="col-xs-12 col-sm-6 col-md-4 food-item"
+            *ngFor="let product of products | async">
+                <div class="food-item-wrap">
+                    <div class="figure-wrap bg-image" appBgImage [imageSrc]="product.Thumbnail">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-name">{{product.Name}} </div>
+                        <div class="price-btn-block"> 
+                            <span class="price">{{product.Price | currency:'VND':true}}</span> <button (click)="addToCard(product)" class="btn theme-btn-dash pull-right">Đặt ngay</button> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

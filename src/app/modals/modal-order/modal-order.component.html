@@ -1,0 +1,88 @@
+<!-- Modal -->
+<div class="modal-content">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="closeModal()"> 
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-body cart-addon">
+        <div class="food-item white">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-8">
+                    <div class="rest-logo pull-left">
+                        <a class="restaurant-logo pull-left" href="#">
+                            <img src="assets/images/pl/pl_product_5.png" alt="Food logo" height="120px">
+                        </a>
+                    </div>
+                    <!-- end:Logo -->
+                    <div class="rest-descr" style=" padding-top: 10px;">
+                        <h6><a href="#"><b>Trà đào</b></a></h6>
+                        <p> 45.000 đ</p>
+                    </div>
+                    <!-- end:Description -->
+                </div>
+                <!-- end:col -->
+            </div>
+            <!-- end:row -->
+
+            <div class="scrollbar">
+                <div class="widget-heading">
+                        <h3 class="widget-title text-dark" style="padding-top: 10px;">Size</h3>
+                        <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-delivery" style="padding: 10px;">
+                    <form>
+                        <div class="col-xs-6 col-sm-12 col-md-4 col-lg-4">
+                            <label class="custom-control custom-radio">
+                                <input id="radio1" name="radio" type="radio" class="custom-control-input" checked=""> <span class="custom-control-indicator"></span> <span class="custom-control-description">Size S</span> </label>
+                        </div>
+                        <div class="col-xs-6 col-sm-12 col-md-4 col-lg-4">
+                            <label class="custom-control custom-radio">
+                                <input id="radio2" name="radio" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Size M (+8.000 đ)</span> </label>
+                        </div>
+                        <div class="col-xs-6 col-sm-12 col-md-4 col-lg-4">
+                            <label class="custom-control custom-radio">
+                                <input id="radio3" name="radio" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Size L (+16.000 đ)</span> </label>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="widget-heading">
+                        <h3 class="widget-title text-dark" style="padding-top: 10px;">Topping</h3>
+                        <div class="clearfix"></div>
+                </div>
+
+                <div class="widget-delivery" style="padding: 10px;">
+                    <form>
+                        <div class="col-xs-6 col-sm-12 col-md-4 col-lg-4">
+                            <label class="custom-control custom-radio">
+                                <input id="radio1" name="radio" type="radio" class="custom-control-input" checked=""> <span class="custom-control-indicator"></span> <span class="custom-control-description">Trân châu (+2.000 đ)</span> </label>
+                        </div>
+                        <div class="col-xs-6 col-sm-12 col-md-4 col-lg-4">
+                            <label class="custom-control custom-radio">
+                                <input id="radio2" name="radio" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Pudding (+2.000 đ)</span> </label>
+                        </div>
+                        <div class="col-xs-6 col-sm-12 col-md-4 col-lg-4">
+                            <label class="custom-control custom-radio">
+                                <input id="radio3" name="radio" type="radio" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description">Sương sáo (+2.000 đ)</span> </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- end:Food item -->
+
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">&#43;</a>
+                        <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">3</a>
+                        <a href="#" class="btn btn-small btn btn-secondary pull-left" data-toggle="modal" data-target="#order-modal" style="float: letf;">&#45;</a>
+                    </div>
+                <div class="col-xs-6">
+                    <button type="button" class="btn theme-btn">Đồng ý + 55.000 đ</button>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>

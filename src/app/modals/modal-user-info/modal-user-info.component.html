@@ -1,0 +1,55 @@
+<!-- Modal -->
+<div class="modal-content">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="closeModal()"> 
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-body cart-addon">
+        <form [formGroup]="frmRegistration">
+            <div class="row">
+              <div class="alert alert-danger" *ngIf="regisSubmited && frmRegistration.invalid" >
+                  <div *ngIf="frmRegistration.get('phone').invalid">
+                      <p *ngFor="let err of frmRegistration.get('phone').errors | keys">
+                          <strong>Điện thoại :</strong> {{regisValidMessages.phone[err]}}
+                      </p>
+                  </div>
+                  <div *ngIf="frmRegistration.get('fullName').invalid">
+                      <p><strong>Họ và Tên :</strong> {{regisValidMessages.required}}</p>
+                  </div>
+                  <div *ngIf="frmRegistration.get('email').invalid">
+                      <p *ngFor="let err of frmRegistration.get('email').errors | keys">
+                          <strong>Email :</strong> {{regisValidMessages.email[err]}}
+                      </p>
+                  </div>
+              </div>
+              <div class="alert alert-danger" *ngIf="regisSubmited && regisCbMessage" >
+                  <p>{{regisCbMessage}} </p>
+              </div>
+              <div class="form-group col-sm-6"
+              [class.has-warning]="(regisSubmited || frmRegistration.get('phone').dirty) && frmRegistration.get('phone').invalid"
+              [class.has-success]="frmRegistration.get('phone').dirty && frmRegistration.get('phone').valid">
+                  <label for="exampleInputEmail1">Số điện thoại</label>
+                  <input formControlName="phone" class="form-control" type="tel" placeholder="Nhập số điện thoại" id="example-tel-input-3">
+              </div>
+              <div class="form-group col-sm-6"
+              [class.has-warning]="(regisSubmited || frmRegistration.get('fullName').dirty) && frmRegistration.get('fullName').invalid"
+              [class.has-success]="frmRegistration.get('fullName').dirty && frmRegistration.get('fullName').valid">
+                  <label for="exampleInputEmail1">Họ và Tên</label>
+                  <input formControlName="fullName" class="form-control" type="text" placeholder="Họ và Tên" id="example-text-input"> 
+              </div>
+              <div class="form-group col-sm-12"
+              [class.has-warning]="(regisSubmited || frmRegistration.get('email').dirty) && frmRegistration.get('email').invalid"
+              [class.has-success]="frmRegistration.get('email').dirty && frmRegistration.get('email').valid">
+                  <label for="exampleInputEmail1">Email</label>
+                  <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập email">
+              </div>
+            </div>
+            <div class="row">
+                
+              <div class="col-sm-4">
+                  <p> <button (click)="signup()" class="btn theme-btn">Đăng ký</button> </p>
+              </div>
+            </div>
+        </form>
+    </div>
+</div>

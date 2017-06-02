@@ -1,0 +1,57 @@
+
+
+  <section class="contact-page inner-page">
+    <div class="container">
+        <div class="row">
+            <!-- REGISTER -->
+
+            <div class="col-md-8">
+                <div class="widget">
+                    <div class="widget-body">
+                        <h2>Bài viết</h2>
+                        <!-- Contact form -->
+                        <div *ngFor="let blog of blogs | async"
+                        class="bg-gray restaurant-entry">
+                          <div class="row row-eq-height">
+                              <div class="col-sm-12 col-md-12 col-lg-12 text-xs-center text-sm-left">
+                                  <div class="entry-logo">
+                                      <a class="img-fluid" [attr.href]="blog.link">
+                                        <!--<img appBgImage [imageSrc]="blog.featured_image.source" alt="Food logo">-->
+                                        <div class="figure-wrap bg-image" appBgImage [imageSrc]="blog.featured_image.source" *ngIf="blog" style="height:110px;width:110px;"></div>
+                                      </a>
+                                  </div>
+                                  <!-- end:Logo -->
+                                  <div class="entry-dscr">
+                                      <h5><a [attr.href]="blog.link">{{blog.title}}</a></h5> 
+                                      <span [innerHTML]="blog.excerpt"></span>
+                                      <ul class="list-inline">
+                                          <li class="list-inline-item"><i class="fa fa-pencil" aria-hidden="true"></i> Đăng bởi: <strong>{{blog.author.nickname}}</strong></li>
+                                          <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> {{blog.modified | date}}</li>
+                                          <li class="list-inline-item"><a [attr.href]="blog.link">Xem Thêm...</a></li>
+                                      </ul>
+                                  </div>
+                                  <!-- end:Entry description -->
+                              </div>
+                          </div>
+                          <!--end:row -->
+                        </div>
+                        <!-- End Contact form -->
+                    </div>
+                </div>
+                <!-- end: Widget -->
+            </div>
+            <!-- /REGISTER -->
+            <!-- WHY? -->
+            <div class="col-md-4">
+                <h4>GIỚI THIỆU CHUNG</h4>
+                <br>
+                <p>Những bài viết này là những cảm nhận của chúng tôi về những điều kì diệu từ... cà phê.</p>
+                <hr>
+            
+            </div>
+            <!-- /WHY? -->
+        </div>
+    </div>
+</section>
+    
+  
