@@ -1,3 +1,6 @@
+/*LIBRARY*/
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 #loader-wrapper {
     position: fixed;
     top: 0;

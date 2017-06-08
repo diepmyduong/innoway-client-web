@@ -3,7 +3,7 @@
       <div class="row">
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
               <div class="sidebar clearfix m-b-20">
-                  <div class="main-block">
+                  <div class="main-block" id="category">
                       <div class="sidebar-title white-txt">
                           <h6>Loại sản phẩm</h6> <i class="fa fa-cutlery pull-right"></i> </div>
                       <ul>
@@ -61,7 +61,7 @@
           </div>
           <div class="col-xs-12 col-md-12 col-lg-3">
               <div class="sidebar-wrap">
-                  <div class="widget widget-cart">
+                  <div class="widget widget-cart" id="card">
                       <div class="widget-heading">
                           <h3 class="widget-title text-dark">
                             Giỏ hàng
@@ -110,3 +110,9 @@
       <!-- end:row -->
   </div>
 </section>
+<button id="scroll-to-card" md-fab color="warn">
+    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+</button>
+<button id="scroll-to-category" md-fab color="warn">
+    <i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+</button>

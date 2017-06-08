@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewContainerRef, ElementRef,ViewChild,Inject,} from '@angular/core';
+import { Component, OnInit ,ViewContainerRef, ElementRef,ViewChild,Inject,NgZone} from '@angular/core';
 import { Overlay, overlayConfigFactory } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { ModalOrderComponent, OrderModalContext} from '../../modals/modal-order/modal-order.component';
@@ -7,8 +7,11 @@ import { NotifyService } from '../../modules/ng-innoway/services/notify.service'
 import { CardService } from '../../modules/ng-innoway/services/card.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { PageScrollConfig, PageScrollService, PageScrollInstance } from 'ng2-page-scroll';
 import {DOCUMENT} from '@angular/platform-browser';
+
+declare var $:any;
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +23,8 @@ export class ProfileComponent implements OnInit {
   categories:Observable<[any]>;
   products:Observable<[any]>;
   cards:Observable<[any]>;
+  isOnCardArea = new BehaviorSubject<boolean>(false) ;
+
   private _cards = [];
   @ViewChild('productsContainer') private productsContainer:ElementRef;
   constructor(
@@ -31,6 +36,7 @@ export class ProfileComponent implements OnInit {
     private pageScrollService: PageScrollService,
     public cardService:CardService,
     public notifyService:NotifyService,
+    private zone: NgZone,
     @Inject(DOCUMENT) private document: any
   ) { 
     this.categories = this.productService.getAllCategory();
@@ -39,10 +45,43 @@ export class ProfileComponent implements OnInit {
     this.cards.subscribe(cards =>{
       this._cards = cards;
     })
+    
   }
 
   ngOnInit() {
+    var $scrollCardBtn =  $("#scroll-to-card");
+    var $scrollCategoryBtn = $("#scroll-to-category");
+    var $card = $('#card');
+    var $category = $('#category');
+    $scrollCardBtn.click(()=>{
+      $('html, body').animate({
+          scrollTop: $card.offset().top - 70
+      }, 1000);
+    })
+    $scrollCategoryBtn.click(()=>{
+      $('html, body').animate({
+          scrollTop: $category.offset().top - 70
+      }, 1000);
+    })
     
+    $(window).scroll(function() {
+      var chT = $category.offset().top,
+          chH = $category.outerHeight();
+      var hT = $card.offset().top,
+          hH = $card.outerHeight(),
+          wH = $(window).height(),
+          wS = $(this).scrollTop();
+      if (wS > (hT+hH-wH)){
+        $scrollCardBtn.addClass('hide');
+      }else{
+        $scrollCardBtn.removeClass('hide');
+      }
+      if(wS > (chT+chH)){
+        $scrollCategoryBtn.removeClass('hide');
+      }else{
+        $scrollCategoryBtn.addClass('hide');
+      }
+    });
   }
 
   openOrderModal(){
@@ -59,9 +98,9 @@ export class ProfileComponent implements OnInit {
 
   anchorTo(category){
     var target = '#category_'+category.Id;
-    console.log(target);
-    let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({document: this.document, scrollTarget: target, scrollingViews: [this.productsContainer.nativeElement]});
-    this.pageScrollService.start(pageScrollInstance);
+    $('html, body').animate({
+        scrollTop: $(target).offset().top - 70
+    }, 1000);
   }
 
   addToCard(product){
