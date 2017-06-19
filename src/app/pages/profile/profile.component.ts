@@ -53,13 +53,14 @@ export class ProfileComponent implements OnInit {
       }
     })
   }
-  ngOnInit() { 
+
+  ngOnInit() {
     var $scrollCardBtn =  $("#scroll-to-card");
     var $scrollCategoryBtn = $("#scroll-to-category");
     var $card = $('#card');
     var $category = $('#category');
     $scrollCardBtn.click(()=>{
-      $('html, body').animate({ 
+      $('html, body').animate({
           scrollTop: $card.offset().top - 70
       }, 1000);
     })
