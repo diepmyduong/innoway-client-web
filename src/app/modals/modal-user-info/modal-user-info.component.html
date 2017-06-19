@@ -41,7 +41,7 @@
               [class.has-warning]="(regisSubmited || frmRegistration.get('email').dirty) && frmRegistration.get('email').invalid"
               [class.has-success]="frmRegistration.get('email').dirty && frmRegistration.get('email').valid">
                   <label for="exampleInputEmail1">Email</label>
-                  <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập email">
+                  <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập email" readonly>
               </div>
             </div>
             <div class="row">

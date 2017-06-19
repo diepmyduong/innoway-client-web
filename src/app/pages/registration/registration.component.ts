@@ -3,7 +3,7 @@ import { FormBuilder , FormGroup} from '@angular/forms';
 import { RegistrationFormGroup, RegistrationValidateMessages } from '../../forms/registration.group';
 import { LoginFormGroup,LoginValidateMessages } from '../../forms/login.group';
 import { AuthService } from '../../modules/ng-innoway/services/auth.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { overlayConfigFactory } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { ModalUserInfoComponent, UserInfoModalContext} from '../../modals/modal-user-info/modal-user-info.component';
@@ -27,13 +27,20 @@ export class RegistrationComponent implements OnInit {
     private fb: FormBuilder,
     public authService: AuthService,
     private router: Router,
-    private modal: Modal
+    private modal: Modal,
+    private route: ActivatedRoute
   ) { 
 
     this.frmRegistration = RegistrationFormGroup(fb);
     this.frmLogin = LoginFormGroup(fb);
     this.regisValidMessages = RegistrationValidateMessages;
     this.loginValidateMessages = LoginValidateMessages;
+    route.params.subscribe(params =>{
+      if(params.senderId){
+        console.log('SENDER ID',params.senderId);
+        localStorage.setItem('demo.innoway.fb.senderId',params.senderId);
+      }
+    })
   }
 
   ngOnInit() {
@@ -42,11 +49,14 @@ export class RegistrationComponent implements OnInit {
   signup(){
     this.regisSubmited = true;
     if(this.frmRegistration.valid){
+      var facebookSenderId = localStorage.getItem("demo.innoway.fb.senderId");
+
       var data = {
         phone: this.frmRegistration.get('phone').value,
         password: this.frmRegistration.get('password').value,
         fullName: this.frmRegistration.get('fullName').value,
         email: this.frmRegistration.get('email').value,
+        facebookSenderId: facebookSenderId
       }
       this.authService.signUp(data).then(user => {
         console.log('SUCCESS',user);
@@ -64,7 +74,8 @@ export class RegistrationComponent implements OnInit {
     if(this.frmLogin.valid){
       var phone = this.frmLogin.get('phone').value;
       var password = this.frmLogin.get('password').value;
-      this.authService.login(phone,password).then(user => {
+      var facebookSenderId = localStorage.getItem("demo.innoway.fb.senderId");
+      this.authService.login(phone,password,facebookSenderId).then(user => {
         this.router.navigate(['/profile']);
       }).catch(err => {
         this.loginCbMessage = err;
@@ -74,31 +85,54 @@ export class RegistrationComponent implements OnInit {
   }
 
   loginWithFacebook(){
-    this.authService.loginWithFacebook().then(user =>{
+    var facebookSenderId = localStorage.getItem("demo.innoway.fb.senderId");
+    this.authService.loginWithFacebook(facebookSenderId).then(user =>{
       setTimeout(()=>{
         this.router.navigate(['/profile']);
       },500);
       // this.router.navigate(['/profile']);
     }).catch(err => {
-      this.openUserInfoModal('facebook',err);
+      if(err.token){
+        var facebookProfile = this.authService.customer.facebookProfile;
+        this.openUserInfoModal('facebook',err.token,{
+          name: facebookProfile.name,
+          email: facebookProfile.email,
+          uid: facebookProfile.id
+        });
+      }else{
+        this.loginCbMessage = err;
+      }
+      
     });
   }
 
   loginWithGoogle(){
-    this.authService.loginWithGoogle().then(user =>{
+    var facebookSenderId = localStorage.getItem("demo.innoway.fb.senderId");
+    this.authService.loginWithGoogle(facebookSenderId).then(user =>{
       setTimeout(()=>{
         this.router.navigate(['/profile']);
       },500);
     }).catch(err => {
-      this.openUserInfoModal('google',err)
+      console.log('ERROR',err); 
+      if(err.token){
+        var googleProfile = this.authService.customer.googleProfile;
+        this.openUserInfoModal('google',err.token,{
+          name: googleProfile.getName(),
+          email: googleProfile.getEmail(),
+          uid: googleProfile.getId()
+        })
+      }else{
+        this.loginCbMessage = err;
+      }
     });
   }
 
-  openUserInfoModal(provider:string,token:string){
+  openUserInfoModal(provider:string,token:string,profile:any){
     this.modal.open(ModalUserInfoComponent, 
       overlayConfigFactory({ 
         provider: provider, 
-        token: token 
+        token: token ,
+        profile: profile
       },
       UserInfoModalContext));
   }

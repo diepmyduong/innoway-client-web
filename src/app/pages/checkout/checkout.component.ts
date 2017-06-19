@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef , ViewChild, NgZone} from '@angular/core';
+import { Component, OnInit, ElementRef , ViewChild, NgZone, Input} from '@angular/core';
 import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 import { CardService } from '../../modules/ng-innoway/services/card.service';
 import { Observable } from 'rxjs/Observable';
@@ -11,8 +11,9 @@ import { AuthService } from '../../modules/ng-innoway/services/auth.service';
 import { MapsAPILoader } from 'angular2-google-maps/core';
 import { MapPosition } from '../../blocks/bl-map/bl-map.component';
 import {} from '@types/googlemaps';
+import { Router } from '@angular/router';
 
-declare var google: any;
+declare var google: any,MessengerExtensions:any;
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -21,6 +22,7 @@ declare var google: any;
 export class CheckoutComponent implements OnInit {
 
   @ViewChild('placeSearchbar') placeSearchBarRef: ElementRef;
+ 
   date: DateModel;
   options: DatePickerOptions;
   cards:Observable<[any]>;
@@ -51,7 +53,8 @@ export class CheckoutComponent implements OnInit {
     public cardService:CardService,
     public authService:AuthService,
     public mapsAPILoader: MapsAPILoader,
-    private zone:NgZone
+    private zone:NgZone,
+    private router:Router
   ) {
     // this.options = new DatePickerOptions();
     // this.options.initialDate = new Date();
@@ -68,7 +71,7 @@ export class CheckoutComponent implements OnInit {
     this.frmRegistration.get('phone').setValue(userInfo.Phone);
     this.frmRegistration.get('fullName').setValue(userInfo.Fullname);
     this.frmRegistration.get('email').setValue(userInfo.Email);
-
+    
   }
 
   ngOnInit() {
@@ -100,6 +103,7 @@ export class CheckoutComponent implements OnInit {
 
   billInfo(){
     this.locationSubmited = true;
+    console.error('this.frmAddress.valid',this.frmAddress.valid);
     if(this.frmAddress.valid){
       this.currentStep = 'order';
       this.frmRegistration.controls['address'].setValue(this.frmAddress.controls['address'].value);
@@ -126,10 +130,22 @@ export class CheckoutComponent implements OnInit {
           }
         })
       }
+      // if(this.router.routerState.snapshot.url.includes('/fb/')){
+      //   data = Object.assign(data,{
+      //     senderId: localStorage.getItem('demo.innoway.fb.senderId')
+      //   })
+      // }
       this.cardService.order(data).then((result:any) =>{
         this.currentStep = 'complete';
         this.step.complete = true;
         this.orderId = result.Code;
+        if(this.router.routerState.snapshot.url.includes('/fb/')){
+          MessengerExtensions.requestCloseBrowser((success)=>{
+              // this.orderId  = success;
+          },(err,mess) =>{ 
+            // this.orderId = mess;      
+          });
+        }
       }).catch(err =>{
         console.error('ERROR',err);
       })

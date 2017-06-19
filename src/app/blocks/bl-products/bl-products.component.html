@@ -9,7 +9,7 @@
             <div class="col-xs-12 col-sm-6 col-md-4 food-item"
             *ngFor="let product of products | async">
                 <div class="food-item-wrap">
-                    <div class="figure-wrap bg-image" appBgImage [imageSrc]="product.Thumbnail">
+                    <div class="figure-wrap bg-image" appBgImage [imageSrc]="product.Thumbnail" *ngIf="product">
                     </div>
                     <div class="product-content">
                         <div class="product-name">{{product.Name}} </div>

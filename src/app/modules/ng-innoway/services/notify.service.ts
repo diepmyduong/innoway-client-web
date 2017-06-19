@@ -7,8 +7,9 @@ export class NotifyToastOption extends ToastOptions {
   animate = 'flyRight'; // you can override any options available
   newestOnTop = false;
   showCloseButton = true;
-  positionClass = 'toast-bottom-right';
+  positionClass = 'toast-top-right';
   maxShown = 2;
+  toastLife = 1000;
 }
 
 @Injectable()

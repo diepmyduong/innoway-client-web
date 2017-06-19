@@ -49,15 +49,16 @@ export class AuthService {
     this.loggedIn = value;
   }
 
-  login(phone,password){
+  login(phone,password,facebookSenderId = ""){
     return new Promise((resolve,reject)=>{
       this._customer.login(phone,password,(err,data)=>{
         if(err){
           reject(data);
         }else{
+          localStorage.removeItem("demo.innoway.fb.senderId");
           resolve(data);
         }
-      });
+      },facebookSenderId);
     })
   }
 
@@ -67,33 +68,49 @@ export class AuthService {
         if(err){
           reject(data);
         }else{
+          localStorage.removeItem("demo.innoway.fb.senderId");
           resolve(data);
         }
       });
     });
   }
 
-  loginWithFacebook(){
+  loginWithFacebook(facebookSenderId = ""){
     return new Promise((resolve,reject)=>{
+      console.log("SENDER ID",facebookSenderId);
       this._customer.loginWithFacebook((err,data)=>{
         if(err){
-          reject(data);
+          if(err == 'User not signup'){
+            reject({
+              token: data
+            });
+          }else{
+            reject(data);
+          }
         }else{
+          localStorage.removeItem("demo.innoway.fb.senderId");
           resolve(data);
         }
-      })
+      },facebookSenderId)
     });
   }
 
-  loginWithGoogle(){
+  loginWithGoogle(facebookSenderId = ""){
     return new Promise((resolve,reject)=>{
       this._customer.loginWithGoogle((err,data)=>{
         if(err){
-          reject(data);
+          if(err == 'User not signup'){
+            reject({
+              token: data
+            });
+          }else{
+            reject(data);
+          }
         }else{
+          localStorage.removeItem("demo.innoway.fb.senderId");
           resolve(data);
         }
-      })
+      },facebookSenderId)
     });
   }
 
@@ -109,6 +126,7 @@ export class AuthService {
         if(err){
           reject(data);
         }else{
+          localStorage.removeItem("demo.innoway.fb.senderId");
           resolve(data);
         }
       })
@@ -121,6 +139,7 @@ export class AuthService {
         if(err){
           reject(data);
         }else{
+          localStorage.removeItem("demo.innoway.fb.senderId");
           resolve(data);
         }
       })

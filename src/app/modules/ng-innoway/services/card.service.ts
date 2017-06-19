@@ -18,7 +18,6 @@ export class CardService {
   public getCards(){
     this.cards = new Observable<[any]>(ob =>{
       $(innoway.Customer).on(innoway.Customer.events.CardsChange,(e,cb)=>{
-        console.log('CARD CHANGE',cb);
         this.total = 0;
         cb.data.forEach(card =>{
           this.total += card.Quantity*card.Price;

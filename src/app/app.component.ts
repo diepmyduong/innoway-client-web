@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef,OnInit} from '@angular/core';
 import { NotifyService } from './modules/ng-innoway/services/notify.service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd,NavigationStart } from '@angular/router';
 
 declare var $:any;
 
@@ -11,6 +11,8 @@ declare var $:any;
 })
 export class AppComponent implements OnInit {
   
+  isFb = false;
+
   constructor(
     public notifyService: NotifyService,
     private vcr: ViewContainerRef,
@@ -18,18 +20,20 @@ export class AppComponent implements OnInit {
   ){
     this.notifyService.setViewContainer(vcr);
   }
-
   ngOnInit() {
+      
       this.router.events.subscribe((evt) => {
-          console.log('ROUTE EVENT',evt)
-          if (!(evt instanceof NavigationEnd)) {
-              return;
-          }
+        
+        if( evt instanceof NavigationEnd){
           window.scrollTo(0, 0)
+        }else{
+          return;
+        }
       });
       setTimeout(()=>{
         $('body').addClass('loaded');
-      },1000);
+      },500);
+
       
   }
 

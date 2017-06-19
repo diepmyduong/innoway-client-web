@@ -7,7 +7,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { AgmCoreModule} from 'angular2-google-maps/core';
 import { DatePickerModule } from 'ng2-datepicker';
-import { Ng2TableModule } from 'ng2-table'
+import { Ng2TableModule } from 'ng2-table';
+import { MdButtonModule } from '@angular/material';
+import 'hammerjs';
 
 import { routers } from './app.router';
 import { FoodyModule } from './modules/foody/foody.module';
@@ -33,6 +35,10 @@ import { BlMapComponent } from './blocks/bl-map/bl-map.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ModalBillDetailComponent } from './modals/modal-bill-detail/modal-bill-detail.component';
 import { PromotionComponent } from './pages/promotion/promotion.component';
+import { FbLayoutComponent } from './layouts/fb-layout/fb-layout.component';
+import { FullLayoutComponent } from './layouts/full-layout/full-layout.component';
+
+//CSS
 
 @NgModule({
   declarations: [
@@ -56,6 +62,8 @@ import { PromotionComponent } from './pages/promotion/promotion.component';
     UserProfileComponent,
     ModalBillDetailComponent,
     PromotionComponent,
+    FbLayoutComponent,
+    FullLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,14 +81,23 @@ import { PromotionComponent } from './pages/promotion/promotion.component';
       libraries: ["places"]
     }),
     DatePickerModule,
-    Ng2TableModule
+    Ng2TableModule,
+    MdButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
     ModalOrderComponent,
     ModalUserInfoComponent,
-    ModalBillDetailComponent
+    ModalBillDetailComponent,
+  ],
+  exports: [
+    BlSliderComponent,
+    BlProductsComponent,
+    BlDownloadComponent,
+    BlHIWComponent,
+    BlMapComponent,
+    FoodyModule
   ]
 })
 export class AppModule { }

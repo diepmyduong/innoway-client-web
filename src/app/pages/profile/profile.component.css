@@ -1,0 +1,22 @@
+.hide {
+    display: none !important;
+}
+#scroll-to-card {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+}
+#scroll-to-category {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 99;
+}
+@media (max-width: 767px) {
+    #scroll-to-card,#scroll-to-category {
+        display: block;
+    }
+}

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 export class UserInfoModalContext extends BSModalContext {
   public provider: string;
   public token: string;
+  public profile: any;
 }
 
 @Component({
@@ -36,6 +37,10 @@ export class ModalUserInfoComponent implements OnInit,CloseGuard, ModalComponent
   }
 
   ngOnInit() {
+    if(this.context.profile){
+      this.frmRegistration.controls['fullName'].setValue(this.context.profile.name);
+      this.frmRegistration.controls['email'].setValue(this.context.profile.email);
+    }
   }
 
   beforeDismiss(): boolean {
@@ -53,12 +58,14 @@ export class ModalUserInfoComponent implements OnInit,CloseGuard, ModalComponent
   signup(){
     this.regisSubmited = true;
     if(this.frmRegistration.valid){
+      var facebookSenderId = localStorage.getItem("demo.innoway.fb.senderId");
       var data = {
         phone: this.frmRegistration.get('phone').value,
         fullName: this.frmRegistration.get('fullName').value,
         email: this.frmRegistration.get('email').value,
+        facebookSenderId: facebookSenderId
       }
-      this.authService.signUpWithProvider(this.context.provider,this.context.token,data).then(user => {
+      this.authService.signUpWithProvider(this.context.provider,this.context.profile.uid,data).then(user => {
         console.log('SUCCESS',user);
         this.router.navigate(['/profile']);
         this.closeModal();

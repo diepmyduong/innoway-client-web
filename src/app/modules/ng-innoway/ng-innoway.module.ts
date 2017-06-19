@@ -15,6 +15,7 @@ import { AgmCoreModule,GoogleMapsAPIWrapper,MarkerManager,MapsAPILoader} from 'a
 import { BillService } from './services/bill.service';
 import { BlogsService } from './services/blogs.service';
 import { PromotionService } from './services/promotion.service';
+import { FbGuard } from './services/fb.guard';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { PromotionService } from './services/promotion.service';
     AuthService, ProductsService,AuthGuard,UnAuthGuard, CardService, NotifyService,
     BillService,
     BlogsService,
-    PromotionService
+    PromotionService,
+    FbGuard
   ],
   exports: [
     KeysPipe,SearchFilterPipe
